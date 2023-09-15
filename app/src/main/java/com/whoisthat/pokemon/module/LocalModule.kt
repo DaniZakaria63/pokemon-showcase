@@ -3,6 +3,9 @@ package com.whoisthat.pokemon.module
 import android.content.Context
 import androidx.room.Room
 import com.whoisthat.pokemon.local.data.PokemonDatabase
+import com.whoisthat.pokemon.local.data.dao.PokemonDao
+import com.whoisthat.pokemon.local.data.repository.PokemonDataStore
+import com.whoisthat.pokemon.local.data.source.DataStore
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -22,4 +25,14 @@ object LocalModule {
             PokemonDatabase.NAME
             ).build()
     }
+
+    @Provides
+    @Singleton
+    fun providePokemonDao(pokemonDatabase: PokemonDatabase) : PokemonDao
+     = pokemonDatabase.pokemonDao()
+
+    @Provides
+    @Singleton
+    fun provideDataStore(pokemonDao: PokemonDao) : DataStore
+     = PokemonDataStore(pokemonDao)
 }
