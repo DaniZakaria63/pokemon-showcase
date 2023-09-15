@@ -6,6 +6,7 @@ import com.whoisthat.pokemon.domain.source.DispatcherProvider
 import com.whoisthat.pokemon.local.data.source.DataStore
 import com.whoisthat.pokemon.remote.data.source.NetworkService
 import com.whoisthat.pokemon.remote.domain.PokemonModel
+import com.whoisthat.pokemon.remote.mapper.toDomain
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
