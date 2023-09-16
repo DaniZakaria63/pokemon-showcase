@@ -12,4 +12,8 @@ data class Set(
     var updatedAt: String? = null,
     var images: Images? = Images()
 ) {
+    data class Images(
+        var symbol: String? = null,
+        var logo: String? = null,
+    )
 }

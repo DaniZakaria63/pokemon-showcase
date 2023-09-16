@@ -1,8 +1,9 @@
 package com.whoisthat.pokemon.domain.domain
 
-data class Market(
+data class TcgPlayer(
+
     var url       : String? = null,
     var updatedAt : String? = null,
-    var prices    : PricesMarket? = PricesMarket()
+    var prices    : PricesTcg? = PricesTcg()
 ) {
 }

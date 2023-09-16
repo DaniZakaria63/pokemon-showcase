@@ -21,7 +21,7 @@ data class Pokemon(
     var nationalPokedexNumbers: List<Int> = listOf(),
     var legalities: Legalities? = Legalities(),
     var images: Images? = Images(),
-    var tcgplayer: Market? = Market(),
+    var tcgplayer: TcgPlayer? = TcgPlayer(),
     var cardmarket: Market? = Market()
 ) {
 }

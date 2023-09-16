@@ -1,6 +1,6 @@
 package com.whoisthat.pokemon.domain.domain
 
-data class Prices(
+data class PricesMarket(
     var averageSellPrice: Double? = null,
     var lowPrice: Double? = null,
     var trendPrice: Double? = null,

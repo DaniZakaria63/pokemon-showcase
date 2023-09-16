@@ -81,6 +81,8 @@ dependencies {
     implementation(libs.navigation.compose)
     implementation(libs.navigation.ui)
 
+    implementation(libs.paging.runtime)
+    implementation(libs.paging.compose)
     implementation(libs.timber.core)
 
     testImplementation(libs.junit)

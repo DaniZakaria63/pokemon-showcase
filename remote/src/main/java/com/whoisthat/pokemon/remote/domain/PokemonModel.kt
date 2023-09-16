@@ -23,9 +23,9 @@ data class PokemonModel (
   @SerializedName("rarity"                 ) var rarity                 : String?                = null,
   @SerializedName("flavorText"             ) var flavorText             : String?                = null,
   @SerializedName("nationalPokedexNumbers" ) var nationalPokedexNumbers : ArrayList<Int>         = arrayListOf(),
-  @SerializedName("legalities"             ) var legalities             : LegalitiesModel?            = LegalitiesModel(),
-  @SerializedName("images"                 ) var images                 : ImagesModel?                = ImagesModel(),
-  @SerializedName("tcgplayer"              ) var tcgplayer              : MarketModel?                = MarketModel(),
-  @SerializedName("cardmarket"             ) var cardmarket             : MarketModel?                = MarketModel()
+  @SerializedName("legalities"             ) var legalities             : LegalitiesModel?       = LegalitiesModel(),
+  @SerializedName("images"                 ) var images                 : ImagesModel?           = ImagesModel(),
+  @SerializedName("tcgplayer"              ) var tcgplayer              : TcgplayerModel         = TcgplayerModel(),
+  @SerializedName("cardmarket"             ) var cardmarket             : MarketModel?           = MarketModel()
 
 )

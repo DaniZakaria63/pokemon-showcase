@@ -3,7 +3,7 @@ package com.whoisthat.pokemon.remote.domain
 import com.google.gson.annotations.SerializedName
 
 
-data class PricesModel (
+data class PricesMarketModel (
 
   @SerializedName("averageSellPrice" ) var averageSellPrice : Double? = null,
   @SerializedName("lowPrice"         ) var lowPrice         : Double? = null,

@@ -14,6 +14,6 @@ data class SetModel (
     @SerializedName("ptcgoCode"    ) var ptcgoCode    : String?     = null,
     @SerializedName("releaseDate"  ) var releaseDate  : String?     = null,
     @SerializedName("updatedAt"    ) var updatedAt    : String?     = null,
-    @SerializedName("images"       ) var images       : ImagesModel?     = ImagesModel()
+    @SerializedName("images"       ) var images       : SetImagesModel?     = SetImagesModel()
 
 )

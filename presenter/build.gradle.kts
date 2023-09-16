@@ -46,6 +46,8 @@ dependencies {
     ksp(libs.hilt.compiler)
 
     implementation(libs.lifecycle.viewmodel.ktx)
+    implementation(libs.paging.runtime)
+    implementation(libs.timber.core)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)

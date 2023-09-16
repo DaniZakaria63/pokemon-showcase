@@ -43,6 +43,7 @@ dependencies {
 
     implementation(libs.coroutines.android)
     implementation(libs.coroutines.core)
+    implementation(libs.paging.runtime)
 
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)

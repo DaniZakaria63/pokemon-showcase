@@ -3,7 +3,7 @@ package com.whoisthat.pokemon.remote.domain
 import com.google.gson.annotations.SerializedName
 
 
-data class ReverseHolofoil (
+data class ReverseHolofoilModel (
 
   @SerializedName("low"       ) var low       : Double? = null,
   @SerializedName("mid"       ) var mid       : Double? = null,

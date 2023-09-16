@@ -2,12 +2,10 @@
 plugins {
     alias(libs.plugins.com.android.library)
     alias(libs.plugins.org.jetbrains.kotlin.android)
-    alias(libs.plugins.dagger.hilt.android)
-    alias(libs.plugins.ksp)
 }
 
 android {
-    namespace = "com.whoisthat.pokemon.remote"
+    namespace = "com.whoisthat.pokemon.paging"
     compileSdk = 33
 
     defaultConfig {
@@ -27,29 +25,19 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_11.toString()
+        jvmTarget = "1.8"
     }
 }
 
 dependencies {
+
+    implementation(project(mapOf("path" to ":local")))
     implementation(project(mapOf("path" to ":domain")))
-
-    implementation(libs.hilt.android)
-    ksp(libs.hilt.compiler)
-
-    implementation(libs.paging.runtime)
-
-    implementation(libs.retrofit.core)
-    implementation(libs.retrofit.gson)
-    implementation(libs.retrofit.logging)
-    implementation(libs.gson)
-
-    implementation(libs.timber.core)
-
+    implementation(project(mapOf("path" to ":presenter")))
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
 }
