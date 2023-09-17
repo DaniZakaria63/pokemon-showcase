@@ -1,4 +1,6 @@
 package com.whoisthat.pokemon.presenter.detail.navigator
 
-class DetailNavigator {
+sealed class DetailNavigator {
+    data object NavigateToSearchScreen: DetailNavigator()
+    data object Initial: DetailNavigator()
 }

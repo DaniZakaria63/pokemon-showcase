@@ -39,4 +39,11 @@ class DefaultPokemonRepository @Inject constructor(
             }
         ).flow
     }
+
+    override suspend fun getPokemonDetailById(pokemonId: String): Flow<Result<Pokemon>> {
+        return networkService.requestPokemonDetailById(pokemonId)
+            .map { data: PokemonModel -> Result.success(data.toDomain()) }
+            .catch { emit(Result.failure(it)) }
+            .flowOn(dispatcherProvider.io)
+    }
 }

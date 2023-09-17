@@ -11,10 +11,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.compose.rememberNavController
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.whoisthat.pokemon.domain.domain.Pokemon
 import com.whoisthat.pokemon.presenter.search.viewmodel.SearchViewModel
+import com.whoisthat.pokemon.ui.navigation.PokemonNavHost
 import com.whoisthat.pokemon.ui.search.SearchScreen
 import com.whoisthat.pokemon.ui.theme.PokemonShowcaseTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -26,14 +28,13 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
+            val navHostController = rememberNavController()
             PokemonShowcaseTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background,
                 ) {
-                    SearchScreen { navigator->
-                        Timber.i("Navigator: $navigator")
-                    }
+                    PokemonNavHost(navController = navHostController)
                 }
             }
         }

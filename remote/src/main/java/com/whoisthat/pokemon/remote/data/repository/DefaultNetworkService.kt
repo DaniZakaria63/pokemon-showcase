@@ -5,6 +5,7 @@ import com.whoisthat.pokemon.remote.data.source.NetworkEndpoint
 import com.whoisthat.pokemon.remote.data.source.NetworkService
 import com.whoisthat.pokemon.remote.domain.PokemonModel
 import com.whoisthat.pokemon.remote.domain.ResponseListCardModel
+import com.whoisthat.pokemon.remote.domain.ResponseSingleCardModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
@@ -24,5 +25,10 @@ class DefaultNetworkService @Inject constructor(
             pageSize = query.pageSize,
             orderBy = query.orderBy?.labeL
         )
+    }
+
+    override suspend fun requestPokemonDetailById(pokemonId: String): Flow<PokemonModel> = flow {
+        val data: ResponseSingleCardModel = networkEndpoint.getCardById(pokemonId)
+        emit(data.data)
     }
 }

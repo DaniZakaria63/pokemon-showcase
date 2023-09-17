@@ -73,6 +73,23 @@ class SearchViewModel @Inject constructor(
         }
     }
 
+    fun queryHandler(query: String?){
+        searchQueryState = NetworkCardsQueryParams(
+            query = "name:$query*",
+            page = 1,
+            orderBy = NetworkCardsQueryParams.OrderBy.NUMBER
+        )
+        viewModelScope.launch{
+            searchPagingPokemonsWithParams()
+        }
+    }
+
+    fun navigateTo(navigate: SearchNavigator) {
+        viewModelScope.launch { _navigation.emit(navigate) }
+    }
+
+
+    /* Network Early Adaptation Test
     fun getSimpleData() {
         viewModelScope.launch(dispatcherProvider.main) {
             getSimpleDataInteractor()
@@ -90,19 +107,6 @@ class SearchViewModel @Inject constructor(
                 }
         }
     }
+     */
 
-    fun queryHandler(query: String?){
-        searchQueryState = NetworkCardsQueryParams(
-            query = "name:$query*",
-            page = 1,
-            orderBy = NetworkCardsQueryParams.OrderBy.NUMBER
-        )
-        viewModelScope.launch{
-            searchPagingPokemonsWithParams()
-        }
-    }
-
-    fun navigateTo(navigate: SearchNavigator) {
-        viewModelScope.launch { _navigation.emit(navigate) }
-    }
 }

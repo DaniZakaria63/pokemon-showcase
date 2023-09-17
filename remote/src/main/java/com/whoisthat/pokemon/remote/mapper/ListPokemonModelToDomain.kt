@@ -26,8 +26,8 @@ fun List<PokemonModel>.toDomain(): List<Pokemon> {
             rarity = it.rarity,
             flavorText = it.flavorText,
             nationalPokedexNumbers = it.nationalPokedexNumbers,
-            legalities = Legalities(it.legalities?.unlimited),
-            images = Images(it.images?.small, it.images?.large),
+            legalities = it.legalities?.toDomain(),
+            images = it.images?.toDomain(),
             tcgplayer = it.tcgplayer.toDomain(),
             cardmarket = it.cardmarket?.toDomain()
         )
