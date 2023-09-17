@@ -2,6 +2,7 @@ package com.whoisthat.pokemon.module
 
 import android.content.Context
 import androidx.room.Room
+import com.whoisthat.pokemon.domain.source.DispatcherProvider
 import com.whoisthat.pokemon.local.data.PokemonDatabase
 import com.whoisthat.pokemon.local.data.dao.PokemonDao
 import com.whoisthat.pokemon.local.data.repository.PokemonDataStore
@@ -33,6 +34,6 @@ object LocalModule {
 
     @Provides
     @Singleton
-    fun provideDataStore(pokemonDao: PokemonDao) : DataStore
-     = PokemonDataStore(pokemonDao)
+    fun provideDataStore(pokemonDao: PokemonDao, dispatcherProvider: DispatcherProvider) : DataStore
+     = PokemonDataStore(pokemonDao, dispatcherProvider)
 }

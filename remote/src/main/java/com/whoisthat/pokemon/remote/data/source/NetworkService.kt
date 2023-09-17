@@ -7,6 +7,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface NetworkService {
     fun requestSimpleAPI(): Flow<List<PokemonModel>>
-    suspend fun requestPokemonsDataWithParams(query: NetworkCardsQueryParams): ResponseListCardModel
+    suspend fun requestPokemonsDataWithParams(query: NetworkCardsQueryParams): Result<ResponseListCardModel>
     suspend fun requestPokemonDetailById(pokemonId: String): Flow<PokemonModel>
 }

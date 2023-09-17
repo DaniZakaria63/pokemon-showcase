@@ -1,10 +1,8 @@
 package com.whoisthat.pokemon.remote.mapper
 
-import com.whoisthat.pokemon.domain.domain.Attack
 import com.whoisthat.pokemon.domain.domain.Images
 import com.whoisthat.pokemon.domain.domain.Legalities
 import com.whoisthat.pokemon.domain.domain.Pokemon
-import com.whoisthat.pokemon.remote.domain.AttacksModel
 import com.whoisthat.pokemon.remote.domain.ImagesModel
 import com.whoisthat.pokemon.remote.domain.LegalitiesModel
 import com.whoisthat.pokemon.remote.domain.PokemonModel

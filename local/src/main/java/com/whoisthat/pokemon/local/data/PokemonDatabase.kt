@@ -7,13 +7,13 @@ import com.whoisthat.pokemon.local.domain.PokemonEntity
 
 @Database(
     entities = [PokemonEntity::class],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 abstract class PokemonDatabase : RoomDatabase(){
     abstract fun pokemonDao(): PokemonDao
 
     companion object{
-        val NAME = "drifloon"
+        val NAME = "drifloon.db"
     }
 }

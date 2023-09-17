@@ -35,7 +35,8 @@ class DefaultPokemonRepository @Inject constructor(
         return Pager(
             config = PagingConfig(pageSize = params.pageSize ?: 20),
             pagingSourceFactory = {
-                PokemonPagingRepository(params, networkService, pokemonDataStore)
+                // TODO: Assist Injection for custom params
+                PokemonPagingRepository(params, networkService, pokemonDataStore, dispatcherProvider)
             }
         ).flow
     }

@@ -1,5 +1,6 @@
 package com.whoisthat.pokemon.module
 
+import android.accounts.NetworkErrorException
 import android.content.Context
 import com.google.gson.GsonBuilder
 import com.whoisthat.pokemon.R
@@ -13,6 +14,8 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import okhttp3.Protocol
+import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -41,9 +44,17 @@ object RemoteModule {
     @Provides
     fun provideHeaderInterceptor(apiKey: String): Interceptor {
         return Interceptor { chain: Interceptor.Chain ->
-            val request = chain.request().newBuilder()
-            request.header("X-Api-Key", apiKey)
-            return@Interceptor chain.proceed(request.build())
+            return@Interceptor try {
+                val request = chain.request().newBuilder().header("X-Api-Key", apiKey).build()
+                if (request.body != null) chain.proceed(request) else throw NetworkErrorException("No Internet")
+            } catch (e: Exception) {
+                Timber.e(e)
+                Response.Builder()
+                    .code(600)
+                    .protocol(Protocol.HTTP_2)
+                    .message("No Internet Server Request")
+                    .request(chain.request()).build()
+            }
         }
     }
 
