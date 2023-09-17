@@ -6,7 +6,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
@@ -29,6 +31,9 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -40,6 +45,8 @@ import coil.compose.AsyncImage
 import com.whoisthat.pokemon.domain.domain.Pokemon
 import com.whoisthat.pokemon.presenter.search.navigator.SearchNavigator
 import com.whoisthat.pokemon.presenter.search.viewmodel.SearchViewModel
+import com.whoisthat.pokemon.ui.theme.Dimens
+import com.whoisthat.pokemon.ui.widget.shimmerBrush
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -114,16 +121,43 @@ fun SearchScreen(
                         )
                     )
                 }
-            }) {
+            }, modifier = Modifier.padding(horizontal = Dimens.normal, vertical = Dimens.medium)) {
                 Row {
-                    Column(modifier = Modifier.weight(1f)) {
-                        Text("${pokemon?.name}")
-                        Text("HP ${pokemon?.hp}")
-                        Text("Rarity ${pokemon?.rarity}")
+                    Column(
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(
+                                start = Dimens.normal,
+                                top = Dimens.normal,
+                                bottom = Dimens.normal
+                            )
+                    ) {
+                        Text(
+                            "${pokemon?.name}",
+                            fontWeight = FontWeight.Bold,
+                            fontSize = Dimens.Text.title,
+                            fontFamily = FontFamily.Serif,
+                            modifier = Modifier.padding(horizontal = Dimens.normal, vertical = Dimens.normal)
+                        )
+                        Text("HP ${pokemon?.hp}",
+                            fontSize = Dimens.Text.bodyMedium,
+                            fontFamily = FontFamily.SansSerif,
+                            modifier = Modifier.padding(horizontal = Dimens.normal)
+                        )
+                        Text("Rarity ${pokemon?.rarity}",
+                            fontSize = Dimens.Text.bodyMedium,
+                            fontFamily = FontFamily.SansSerif,
+                            modifier = Modifier.padding(horizontal = Dimens.normal)
+                        )
                     }
                     AsyncImage(
                         model = pokemonPagingState[index]?.images?.small,
-                        contentDescription = "pokemon.image"
+                        contentDescription = "pokemon.image",
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier
+                            .height(200.dp)
+                            .width(170.dp)
+                            .background(shimmerBrush())
                     )
                 }
 

@@ -46,7 +46,7 @@ object RemoteModule {
         return Interceptor { chain: Interceptor.Chain ->
             return@Interceptor try {
                 val request = chain.request().newBuilder().header("X-Api-Key", apiKey).build()
-                if (request.body != null) chain.proceed(request) else throw NetworkErrorException("No Internet")
+                chain.proceed(request)
             } catch (e: Exception) {
                 Timber.e(e)
                 Response.Builder()
