@@ -8,7 +8,7 @@ data class PokemonModel (
   @SerializedName("id"                     ) var id                     : String?                = null,
   @SerializedName("name"                   ) var name                   : String?                = null,
   @SerializedName("supertype"              ) var supertype              : String?                = null,
-  @SerializedName("subtypes"               ) var subtypes               : String?                = null,
+  @SerializedName("subtypes"               ) var subtypes               : ArrayList<String>?                = null,
   @SerializedName("hp"                     ) var hp                     : String?                = null,
   @SerializedName("types"                  ) var types                  : ArrayList<String>      = arrayListOf(),
   @SerializedName("evolvesFrom"            ) var evolvesFrom            : String?                = null,

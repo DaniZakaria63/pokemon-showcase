@@ -1,4 +1,4 @@
-package com.whoisthat.pokemon.presenter
+package com.whoisthat.pokemon.presenter.search.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -9,6 +9,7 @@ import com.whoisthat.pokemon.core.interactors.get_simple_data.GetSimpleDataInter
 import com.whoisthat.pokemon.domain.domain.NetworkCardsQueryParams
 import com.whoisthat.pokemon.domain.domain.Pokemon
 import com.whoisthat.pokemon.domain.source.DispatcherProvider
+import com.whoisthat.pokemon.presenter.search.navigator.SearchNavigator
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -29,20 +30,12 @@ import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
-class PokemonViewModel @Inject constructor(
+class SearchViewModel @Inject constructor(
     val getSimpleDataInteractor: GetSimpleDataInteractor,
     val getCardsPagingBySearch: GetCardsPagingBySearchInteractor,
     val dispatcherProvider: DispatcherProvider
 ) : ViewModel() {
-    private val _searchQueryState: MutableStateFlow<NetworkCardsQueryParams> = MutableStateFlow(
-        NetworkCardsQueryParams()
-    )
-    private val searchQueryState: StateFlow<NetworkCardsQueryParams> get()= _searchQueryState.asStateFlow()
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), NetworkCardsQueryParams())
-    private val _loadingStatus: MutableSharedFlow<Boolean> = MutableSharedFlow()
-
-    val loadingStatus: SharedFlow<Boolean> get() = _loadingStatus.asSharedFlow()
-        .shareIn(viewModelScope, SharingStarted.WhileSubscribed())
+    var searchQueryState: NetworkCardsQueryParams = NetworkCardsQueryParams()
 
     private val _pokemonList: MutableStateFlow<List<Pokemon>> = MutableStateFlow(listOf())
     val pokemonList: StateFlow<List<Pokemon>> get() = _pokemonList.asStateFlow()
@@ -52,27 +45,29 @@ class PokemonViewModel @Inject constructor(
     val pokemonPagingState: StateFlow<PagingData<Pokemon>> get()= _pokemonPagingState.asStateFlow()
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), PagingData.empty())
 
-    val _errorState: MutableSharedFlow<Throwable> = MutableSharedFlow()
+    private val _loadingStatus: MutableSharedFlow<Boolean> = MutableSharedFlow()
+    val loadingStatus: SharedFlow<Boolean> get() = _loadingStatus.asSharedFlow()
+        .shareIn(viewModelScope, SharingStarted.WhileSubscribed())
+
+    private val _errorState: MutableSharedFlow<Throwable> = MutableSharedFlow()
     val errorState: SharedFlow<Throwable> get() = _errorState.asSharedFlow()
         .shareIn(viewModelScope, SharingStarted.Eagerly)
 
+    private val _navigation: MutableSharedFlow<SearchNavigator> = MutableSharedFlow()
+    val navigation: SharedFlow<SearchNavigator> get()= _navigation.asSharedFlow()
+        .shareIn(viewModelScope, SharingStarted.WhileSubscribed())
+
     fun searchPagingPokemonsWithParams(){
-        val dummyParams = NetworkCardsQueryParams(
-            query = "",
-            page = 1,
-            orderBy = NetworkCardsQueryParams.OrderBy.NUMBER
-        )
         viewModelScope.launch(dispatcherProvider.main) {
-            getCardsPagingBySearch(dummyParams)
+            getCardsPagingBySearch(searchQueryState)
                 .flowOn(dispatcherProvider.io)
-                .distinctUntilChanged()
                 .cachedIn(viewModelScope)
                 .catch {
                     Timber.i("Data Response Paging Error: ${it.message}")
                     _errorState.emit(it)
                 }
-                .collectLatest { data ->
-                    Timber.i("Data Response Paging: ${data}")
+                .collect { data ->
+                    Timber.i("Data Response Paging: $data")
                     _pokemonPagingState.emit(data)
                 }
         }
@@ -94,5 +89,20 @@ class PokemonViewModel @Inject constructor(
                     }
                 }
         }
+    }
+
+    fun queryHandler(query: String?){
+        searchQueryState = NetworkCardsQueryParams(
+            query = "name:$query*",
+            page = 1,
+            orderBy = NetworkCardsQueryParams.OrderBy.NUMBER
+        )
+        viewModelScope.launch{
+            searchPagingPokemonsWithParams()
+        }
+    }
+
+    fun navigateTo(navigate: SearchNavigator) {
+        viewModelScope.launch { _navigation.emit(navigate) }
     }
 }

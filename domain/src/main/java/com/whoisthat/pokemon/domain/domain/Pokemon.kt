@@ -4,7 +4,7 @@ data class Pokemon(
     var id: String? = null,
     var name: String? = null,
     var supertype: String? = null,
-    var subtypes: String? = null,
+    var subtypes: List<String>? = null,
     var hp: String? = null,
     var types: List<String> = listOf(),
     var evolvesFrom: String? = null,
@@ -23,5 +23,4 @@ data class Pokemon(
     var images: Images? = Images(),
     var tcgplayer: TcgPlayer? = TcgPlayer(),
     var cardmarket: Market? = Market()
-) {
-}
+)

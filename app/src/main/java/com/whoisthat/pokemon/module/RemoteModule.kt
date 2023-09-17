@@ -12,6 +12,8 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.Interceptor
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import timber.log.Timber
@@ -50,8 +52,16 @@ object RemoteModule {
     fun provideNetworkEndpoint(
         headerInterceptor: Interceptor
     ): NetworkEndpoint {
+        val logging =
+            HttpLoggingInterceptor { Timber.i("API: $it") }.setLevel(HttpLoggingInterceptor.Level.BASIC)
         return Retrofit.Builder()
             .baseUrl(NetworkEndpoint.BASE_URL)
+            .client(
+                OkHttpClient.Builder()
+                    .addInterceptor(headerInterceptor)
+                    .addInterceptor(logging)
+                    .build()
+            )
             .addConverterFactory(
                 GsonConverterFactory.create(GsonBuilder().setLenient().create())
             )

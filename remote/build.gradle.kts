@@ -41,8 +41,6 @@ dependencies {
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
 
-    implementation(libs.paging.runtime)
-
     implementation(libs.retrofit.core)
     implementation(libs.retrofit.gson)
     implementation(libs.retrofit.logging)

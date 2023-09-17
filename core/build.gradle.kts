@@ -27,11 +27,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = JavaVersion.VERSION_11.toString()
     }
 }
 
@@ -39,6 +39,7 @@ dependencies {
 
     implementation(project(mapOf("path" to ":remote")))
     implementation(project(mapOf("path" to ":domain")))
+    implementation(project(mapOf("path" to ":paging")))
     implementation(project(mapOf("path" to ":local")))
 
     implementation(libs.coroutines.android)
